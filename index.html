@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>note</title>
+	<link rel="stylesheet" href="static/layui/css/layui.css">
+</head>
+<body>
+	<!-- 导航 -->
+	<ul class="layui-nav layui-bg-cyan" lay-filter="">
+		<li class="layui-nav-item"><a href="index.html">首页</a></li>
+		<li class="layui-nav-item layui-this"><a href="">CSS</a></li>
+		<li class="layui-nav-item"><a href="">JavaScript</a></li>
+		<li class="layui-nav-item">
+		    <a href="javascript:;">Vue</a>
+		    <dl class="layui-nav-child"> 
+		        <dd><a href="">vue1.0</a></dd>
+		        <dd><a href="">vue2.0</a></dd>
+		        <dd><a href="">vue-router</a></dd>
+		        <dd><a href="">vue-resource</a></dd>
+		        <dd><a href="">axios</a></dd>
+		        <dd><a href="">vuex</a></dd>
+		    </dl>
+		</li>
+		<li class="layui-nav-item">
+		  	<a href="javascript:;">webpack</a>
+		  	<dl class="layui-nav-child"> 
+		        <dd><a href="">webpack3.0</a></dd>
+		    </dl>
+		</li>
+		<li class="layui-nav-item">
+		  	<a href="javascript:;">layui</a>
+		  	<dl class="layui-nav-child"> 
+		  		<dd><a href="project/layui/element.html">element--元素</a></dd>	
+		  		<dd><a href="">layer--弹窗</a></dd>	
+		      	<dd><a href="">layer--弹窗</a></dd>
+		      	<dd><a href="">laypage--分页</a></dd>
+		    </dl>
+		</li>
+	</ul>
+
+	
+	<script type="text/javascript" src="static/layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.config({
+	        base: 'static/js/modules/'
+	    }).use('note');
+	</script>
+</body>
+</html>
