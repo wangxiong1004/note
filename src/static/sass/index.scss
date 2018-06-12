@@ -1,2 +1,11 @@
 @charset 'utf-8';
 
+@import 'reset';
+
+i, em, strong {
+    font-size: 15px;
+}
+
+.p {
+    box-shadow: 2px 2px 10px #ccc;
+}

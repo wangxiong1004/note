@@ -21,13 +21,32 @@ gulp.task('test', function() {
 // 紧凑输出方式 compact 
 // 压缩输出方式 compressed
 gulp.task('sass', function() {
-    return gulp.src('./src/static/sass/index.scss')
-        .pipe(plugins.sass())
-        .pipe(plugins.sass({
+    pump([
+        gulp.src('./src/static/sass/index.scss'),
+        plugins.sourcemaps.init(),
+        plugins.changed('./src/static/sass/**/*.scss', {
+            extension: '.scss'
+        }),
+        plugins.sass({
             outputStyle: 'expanded'
-        }).on('error', plugins.sass.logError))
-        .pipe(gulp.dest('./dist/static/css'))
-        // .pipe(livereload());
+        }).on('error', plugins.sass.logError),
+        plugins.autoprefixer({
+            browsers: ['last 2 versions', 'Android >= 4.0'],
+            cascade: true,
+            remove: true
+        }),
+        plugins.cleanCss({
+            advanced: false,
+            compatibility: 'ie8',
+            keepBreaks: true,
+            keepSpecialComments: '*'
+        }),
+        // plugins.rename({
+        //     suffix: '.min'
+        // }),
+        plugins.sourcemaps.write('.'),
+        gulp.dest('./dist/static/css')
+    ]);
 });
 
 // css添加前缀
@@ -101,7 +120,6 @@ gulp.task('server', function() {
 gulp.task('watch', function() {
     // livereload.listen();
     gulp.watch('./src/static/sass/**/*.scss', ['sass', 'autofix'])
-    gulp.watch('./dist/static/css/**/*.css', ['autofix'])
     gulp.watch('./src/project/**/*.html', ['fileinclude'])
     gulp.watch('./dist/project/**/*.html', ['htmlmin'])
     gulp.watch('./src/static/js/**/*.js', ['js'])

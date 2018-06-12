@@ -1,1 +1,22 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>layui-element</title><link rel="stylesheet" href="../../static/layui/css/layui.css"></head><body><ul class="layui-nav layui-bg-cyan" lay-filter="main"><li class="layui-nav-item"><a href="/project/index.html">首页</a></li><li class="layui-nav-item layui-this"><a href="">CSS</a></li><li class="layui-nav-item"><a href="">JavaScript</a></li><li class="layui-nav-item"><a href="javascript:;">Vue</a><dl class="layui-nav-child"><dd><a href="javscript:;">vue1.0</a></dd><dd><a href="javscript:;">vue2.0</a></dd><dd><a href="javscript:;">vue-router</a></dd><dd><a href="javscript:;">vue-resource</a></dd><dd><a href="javscript:;">axios</a></dd><dd><a href="javscript:;">vuex</a></dd></dl></li><li class="layui-nav-item"><a href="javascript:;">webpack</a><dl class="layui-nav-child"><dd><a href="javscript:;">webpack3.0</a></dd></dl></li><li class="layui-nav-item"><a href="javascript:;">layui</a><dl class="layui-nav-child"><dd><a href="/project/layui/element.html">element--元素</a></dd><dd><a href="javscript:;">layer--弹窗</a></dd><dd><a href="javscript:;">layer--弹窗</a></dd><dd><a href="javscript:;">laypage--分页</a></dd></dl></li></ul><script src="../../static/layui/layui.js"></script><script>layui.config({base:"../../static/js/modules/"}).use("note")</script></body></html>
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><title>layui-element</title><link rel="stylesheet" href="/static/layui/css/layui.css"></head><body><ul class="layui-nav layui-bg-cyan" lay-filter="main"><li class="layui-nav-item"><a href="/project/index.html">首页</a></li><li class="layui-nav-item layui-this"><a href="">CSS</a></li><li class="layui-nav-item"><a href="">JavaScript</a></li><li class="layui-nav-item"><a href="javascript:;">Vue</a><dl class="layui-nav-child"><dd><a href="javscript:;">vue1.0</a></dd><dd><a href="javscript:;">vue2.0</a></dd><dd><a href="javscript:;">vue-router</a></dd><dd><a href="javscript:;">vue-resource</a></dd><dd><a href="javscript:;">axios</a></dd><dd><a href="javscript:;">vuex</a></dd></dl></li><li class="layui-nav-item"><a href="javascript:;">webpack</a><dl class="layui-nav-child"><dd><a href="javscript:;">webpack3.0</a></dd></dl></li><li class="layui-nav-item"><a href="javascript:;">layui</a><dl class="layui-nav-child"><dd><a href="/project/layui/element.html">element--元素</a></dd><dd><a href="javscript:;">layer--弹窗</a></dd><dd><a href="javscript:;">layer--弹窗</a></dd><dd><a href="javscript:;">laypage--分页</a></dd></dl></li></ul><div class="layui-tab layui-tab-brief layui-tab-card" lay-filer="ele-tabs"><ul class="layui-tab-title"><li class="layui-this">html</li><li>scss</li><li>js</li><li>result</li></ul><div class="layui-tab-content"><div class="layui-tab-item layui-show"><pre class="layui-code" lay-title="html" lay-encode="false" lay-skin="notepad" lay-about="false">
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>用户管理</li>
+        <li>权限分配</li>
+        <li>商品管理</li>
+        <li>订单管理</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">内容1</div>
+        <div class="layui-tab-item">内容2</div>
+        <div class="layui-tab-item">内容3</div>
+        <div class="layui-tab-item">内容4</div>
+        <div class="layui-tab-item">内容5</div>
+    </div>
+</div>
+				</pre></div><div class="layui-tab-item"></div><div class="layui-tab-item"><pre class="layui-code" lay-title="javascript" lay-encode="false" lay-skin="notepad" lay-about="false">
+layui.use(['element'], function() {
+    var element = layui.element;
+});
+                </pre></div><div class="layui-tab-item"><div class="layui-tab"><ul class="layui-tab-title"><li class="layui-this">网站设置</li><li>用户管理</li><li>权限分配</li><li>商品管理</li><li>订单管理</li></ul><div class="layui-tab-content"><div class="layui-tab-item layui-show">内容1</div><div class="layui-tab-item">内容2</div><div class="layui-tab-item">内容3</div><div class="layui-tab-item">内容4</div><div class="layui-tab-item">内容5</div></div></div></div></div></div><script src="/static/js/des.js"></script><script src="/static/layui/layui.js"></script><script>layui.config({base:"/static/js/modules/"}).use("note")</script></body></html>
