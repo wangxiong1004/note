@@ -118,7 +118,6 @@ gulp.task('server', function() {
 
 // 监听
 gulp.task('watch', function() {
-    // livereload.listen();
     gulp.watch('./src/static/sass/**/*.scss', ['sass', 'autofix'])
     gulp.watch('./src/project/**/*.html', ['fileinclude'])
     gulp.watch('./dist/project/**/*.html', ['htmlmin'])
@@ -126,5 +125,5 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', function() {
-    sequence('fileinclude', 'htmlmin', ['watch', 'server'])
+    sequence('sass', 'js', 'fileinclude', 'htmlmin', ['watch', 'server'])
 });
