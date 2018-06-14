@@ -1,11 +1,12 @@
 @charset 'utf-8';
 
-@import 'reset';
+@import './information/about';
 
-i, em, strong {
-    font-size: 15px;
+html {
+    background: #ccc;
+    box-shadow: 2px 2px 2px #ccc;
 }
 
-.p {
-    box-shadow: 2px 2px 10px #ccc;
+h2 {
+    font-weight: normal;
 }

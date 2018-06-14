@@ -1,32 +1,33 @@
-
 var gulp = require('gulp');
-var pump = require('pump');
 var plugins = require('gulp-load-plugins')();
-// var sass = require('gulp-sass');
-var livereload = require('gulp-livereload');
-var watch = require('gulp-watch');
+var pump = require('pump');
+var runSequence = require('run-sequence');
 var browser = require('browser-sync');
-var imagemin = require('gulp-imagemin');
-var sequence = require('run-sequence');
-var pngquant = require('imagemin-pngquant');
 
-// 测试
-gulp.task('test', function() {
-    console.log('gulp is ok!');
-});
+var config = {
+    srcScss: './src/static/sass',
+    distCss: './dist/static/css',
+    distRev: './dist/rev',
+    srcViews: './src/views',
+    distViews: './dist/views',
+    srcImages: './src/static/images',
+    distImages: './dist/static/images',
+    srcJs: './src/static/js',
+    distJs: './dist/static/js'
+};
 
-// sass编译
-// 嵌套输出方式 nested
-// 展开输出方式 expanded 
-// 紧凑输出方式 compact 
-// 压缩输出方式 compressed
+/*
+ * gulp sass
+ * 编译、自动添加前缀、压缩、重命名、添加sourcemap
+ * 嵌套输出方式 nested
+ * 展开输出方式 expanded 
+ * 紧凑输出方式 compact 
+ * 压缩输出方式 compressed
+ */
 gulp.task('sass', function() {
     pump([
-        gulp.src('./src/static/sass/index.scss'),
+        gulp.src([config.srcScss + '/index.scss', config.srcScss + '/common.scss']),
         plugins.sourcemaps.init(),
-        plugins.changed('./src/static/sass/**/*.scss', {
-            extension: '.scss'
-        }),
         plugins.sass({
             outputStyle: 'expanded'
         }).on('error', plugins.sass.logError),
@@ -41,43 +42,66 @@ gulp.task('sass', function() {
             keepBreaks: true,
             keepSpecialComments: '*'
         }),
-        // plugins.rename({
-        //     suffix: '.min'
-        // }),
-        plugins.sourcemaps.write('.'),
-        gulp.dest('./dist/static/css')
-    ]);
-});
-
-// css添加前缀
-gulp.task('autofix', function() {
-    pump([
-        gulp.src('./dist/static/css/*.css'),
-        plugins.autoprefixer({
-            browsers: ['last 2 versions', 'Android >= 4.0'],
-                cascade: true,
-                remove: true
+        plugins.rename({
+            suffix: '.min'
         }),
-        gulp.dest('./dist/static/css')
+        plugins.assetRev(),
+        plugins.rev(),
+        plugins.sourcemaps.write('.'),
+        gulp.dest(config.distCss),
+        plugins.rev.manifest('rev-css-mainfest.json'), 
+        gulp.dest(config.distRev)
+    ]);    
+});
+
+gulp.task('js', function() {
+    pump([
+        gulp.src('./src/static/**/*.js'),
+        plugins.sourcemaps.init(),
+        plugins.uglify(),
+        plugins.rev(),
+        plugins.sourcemaps.write('.'),
+        gulp.dest('./dist/static'),
+        plugins.rev.manifest('rev-js-manifest.json'),
+        gulp.dest(config.distRev)
     ]);
 });
 
-// 引入公共html文件
-gulp.task('fileinclude', function() {
+gulp.task('images', function() {
     pump([
-        gulp.src(['./src/project/**/*.html', '!./src/project/include/*.html']),
+        gulp.src([config.srcImages + '/**/*.{png,jpg,gif,ico,jpeg}']),
+        plugins.rev(),
+        gulp.dest(config.distImages),
+        plugins.rev.manifest('rev-img-manifest.json'),
+        gulp.dest(config.distRev)
+    ]);
+});
+
+gulp.task('fileinclude', function () {
+    pump([
+        gulp.src([config.srcViews + '/**/*.html', '!./src/views/include/*.html']),
         plugins.fileInclude({
             prefix: '@@',
             basepath: '@file'
         }),
-        gulp.dest('./dist/project')
+        gulp.dest(config.distViews)
     ])
 });
 
-// html压缩
-gulp.task('htmlmin', function() {
+gulp.task('fileincludeindex', function () {
     pump([
-        gulp.src('./dist/project/**/*.html'),
+        gulp.src(['./src/index.html']),
+        plugins.fileInclude({
+            prefix: '@@',
+            basepath: '@file'
+        }),
+        gulp.dest('./dist')
+    ])
+});
+
+gulp.task('html', function () {
+    pump([
+        gulp.src([config.distRev + '/*.json', config.distViews + '/**/*.html']),
         plugins.htmlmin({
             removeComments: true,
             collapseWhitespace: true,
@@ -88,42 +112,64 @@ gulp.task('htmlmin', function() {
             minifyJS: true,
             minifyCSS: true
         }),
-        gulp.dest('./dist/project')
-    ])
+        plugins.revCollector(),
+        gulp.dest(config.distViews)
+    ]);
 });
 
-// js
-gulp.task('js', function() {
+gulp.task('htmlindex', function () {
     pump([
-        gulp.src('./src/static/js/**/*.js'),
-        plugins.changed('./src/static/js/**/*.js', {
-            extension: '.js'
+        gulp.src([config.distRev + '/*.json', './dist/index.html']),
+        plugins.htmlmin({
+            removeComments: true,
+            collapseWhitespace: true,
+            collapseBooleanAttributes: true,
+            removeEmptyAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            minifyJS: true,
+            minifyCSS: true
         }),
-        plugins.sourcemaps.init(),
-        plugins.uglify(),
-        plugins.sourcemaps.write('.'),
-        gulp.dest('./dist/static/js')
-    ])
-})
+        plugins.revCollector(),
+        gulp.dest('./dist')
+    ]);
+});
 
-// 自动开启浏览器并自动刷新
-gulp.task('server', function() {
+gulp.task('clean', function(cb) {
+    pump([
+        gulp.src([config.distViews, config.distCss, config.distImages, config.distJs, config.distRev]),
+        plugins.clean()
+    ], cb);
+});
+
+gulp.task('watch', function() {
+    gulp.watch(config.srcScss + "/**/*.scss", ['sass', 'html']);
+    gulp.watch(config.srcJs + "/**/*.js", ['js']);
+    gulp.watch(config.srcViews + '/**/*.html', ['fileinclude', 'html']);
+    gulp.watch('./src/index.html', ['fileincludeindex', 'htmlindex']);
+});
+
+gulp.task('server', function () {
     browser.init({
         server: './dist/'
     });
-    gulp.watch('./dist/static/css/**/*.css').on('change', browser.reload)
-    gulp.watch('./dist/**/*.html').on('change', browser.reload)
-    gulp.watch('./dist/static/js/**/*.js', browser.reload)
-});
-
-// 监听
-gulp.task('watch', function() {
-    gulp.watch('./src/static/sass/**/*.scss', ['sass', 'autofix'])
-    gulp.watch('./src/project/**/*.html', ['fileinclude'])
-    gulp.watch('./dist/project/**/*.html', ['htmlmin'])
-    gulp.watch('./src/static/js/**/*.js', ['js'])
+    gulp.watch(config.distScss + '/**/*.css').on('change', browser.reload)
+    gulp.watch(config.distViews + '/**/*.html').on('change', browser.reload)
+    gulp.watch('./dist/index.html').on('change', browser.reload)
+    gulp.watch(config.distJs + '/**/*.js', browser.reload)
 });
 
 gulp.task('default', function() {
-    sequence('sass', 'js', 'fileinclude', 'htmlmin', ['watch', 'server'])
+    condition = false;
+    runSequence(
+        ['clean'],
+        ['sass'],
+        ['js'],
+        ['images'],
+        ['html']
+    )
 });
+
+gulp.task('openServer', function() {
+    runSequence('watch', 'server');
+})
