@@ -1,3 +1,75 @@
-body {
-    margin: 0;
+@charset 'utf-8';
+$color: #ff6700;
+html {
+	font: 14px/1 "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, Verdana, sans-serif, "WenQuanYi Micro Hei", "\5B8B\4F53";
+	color: $color;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	-webkit-backface-visibility: hidden;
+}
+
+a:active,
+a:hover {
+	outline: 0;
+}
+
+img {
+	vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	font-size: 1em;
+}
+
+i,
+em {
+	font-style: normal;
+}
+
+b,
+strong {
+	font-weight: normal;
+}
+
+hr {
+	margin: 0;
+}
+
+// 列表
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+dl,
+dd {
+	margin: 0;
+}
+
+// 表单
+input {
+	outline: none;
+}
+
+input:active,
+button:active {
+	outline: none;
 }

@@ -43,7 +43,7 @@ gulp.task('sass', function() {
             keepSpecialComments: '*'
         }),
         plugins.rename({
-            suffix: '.min'
+            suffix: '.min' 
         }),
         plugins.assetRev(),
         plugins.rev(),
@@ -60,6 +60,7 @@ gulp.task('js', function() {
         plugins.sourcemaps.init(),
         plugins.uglify(),
         plugins.rev(),
+        plugins.assetRev(),
         plugins.sourcemaps.write('.'),
         gulp.dest('./dist/static'),
         plugins.rev.manifest('rev-js-manifest.json'),
@@ -71,6 +72,7 @@ gulp.task('images', function() {
     pump([
         gulp.src([config.srcImages + '/**/*.{png,jpg,gif,ico,jpeg}']),
         plugins.rev(),
+        plugins.assetRev(),
         gulp.dest(config.distImages),
         plugins.rev.manifest('rev-img-manifest.json'),
         gulp.dest(config.distRev)
@@ -143,8 +145,9 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(config.srcScss + "/**/*.scss", ['sass', 'html']);
-    gulp.watch(config.srcJs + "/**/*.js", ['js']);
+    gulp.watch(config.srcScss + '/**/*.scss', ['sass', 'html']);
+    gulp.watch(config.srcJs + '/**/*.js', ['js', 'html']);
+    gulp.watch(config.srcImages + '/**/*.{png,jpg,gif,ico,jpeg}', ['images', 'html']);
     gulp.watch(config.srcViews + '/**/*.html', ['fileinclude', 'html']);
     gulp.watch('./src/index.html', ['fileincludeindex', 'htmlindex']);
 });
@@ -154,6 +157,7 @@ gulp.task('server', function () {
         server: './dist/'
     });
     gulp.watch(config.distScss + '/**/*.css').on('change', browser.reload)
+    gulp.watch(config.distImages + '/**/*.{png,jpg,gif,ico,jpeg}').on('change', browser.reload)
     gulp.watch(config.distViews + '/**/*.html').on('change', browser.reload)
     gulp.watch('./dist/index.html').on('change', browser.reload)
     gulp.watch(config.distJs + '/**/*.js', browser.reload)
@@ -166,7 +170,9 @@ gulp.task('default', function() {
         ['sass'],
         ['js'],
         ['images'],
-        ['html']
+        ['fileinclude', 'html'],
+        ['watch'],
+        ['server']
     )
 });
 

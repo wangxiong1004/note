@@ -1,15 +1,161 @@
 @charset 'utf-8';
-
+@import './common/normalize';
 @import './common/reset';
-
-body {
-    background: rgb(100, 80, 60);
+.clearfix {
+	*zoom: 1;
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
 }
 
-.clearfix {
-    zoom: 1;
-    &:after {
-        content: '';
-        clear: both;
-    }
+.dl-layer.layui-layer {
+	.layui-layer-title {
+		padding-left: 26px;
+		height: 44px;
+		line-height: 44px;
+		font-size: 16px;
+		color: #333;
+		background-color: #f2f2f2;
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.layui-layer-btn {
+		.layui-layer-btn0 {
+			margin: 0;
+			width: 120px;
+			height: 38px;
+			line-height: 38px;
+			font-size: 14px;
+			color: #ffffff;
+			background-color: #ff6700;
+			border-color: #ff6700;
+		}
+	}
+	.layui-layer-content {
+		height: auto !important;
+	}
+	.layer__content {
+		text-align: center;
+	}
+	.layer__tit {
+		font-size: 18px;
+		color: #555;
+		line-height: 30px;
+	}
+	.layer__tip-icon {
+		display: inline-block;
+		vertical-align: top;
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+		border-radius: 50%;
+		background-color: #6FACFF;
+	}
+	.layer__desc {
+		text-align: left;
+		font-size: 14px;
+		color: #666;
+	}
+	&.open-srbank-layer {
+		.layui-layer-content {
+			padding: 60px 20px 30px;
+		}
+		.layer__content {
+			.layer__tit {
+				.behavior {
+					color: #ff6700;
+				}
+			}
+			.layer__text {
+				margin-top: 7px;
+				line-height: 16px;
+				font-size: 12px;
+				color: #8f8f8f;
+			}
+		}
+	}
+	&.bind-card-layer {
+		.layui-layer-content {
+			padding: 74px 0 32px;
+		}
+	}
+	&.unbinding-srbank-layer {
+		.layui-layer-content {
+			padding: 40px 60px 30px 64px;
+		}
+		.layer__content {
+			.layer__tit {
+				line-height: 24px;
+				font-size: 16px;
+				margin-bottom: 10px;
+				.icon-wrapper {
+					display: inline-block;
+					float: left;
+					padding-top: 10px;
+					height: 40px;
+					margin-right: 10px;
+				}
+				.layer__tip-icon {
+					margin-right: 0;
+				}
+				.text {
+					display: inline-block;
+					float: left;
+					width: 352px;
+					text-align: left;
+				}
+				.layer__desc {
+					padding-left: 40px;
+				}
+			}
+		}
+	}
+	&.sign-srbank-layer {
+		.layui-layer-content {
+			padding: 70px 30px 40px;
+			.text {
+				font-size: 14px;
+				color: #555555;
+				a {
+					color: #4a9df4;
+				}
+			}
+		}
+	}
+	&.save-card-layer {
+		.layui-layer-content {
+			padding: 40px 54px 20px 42px;
+		}
+		.layer__content {
+			.layer__tit {
+				font-weight: normal;
+				line-height: 1;
+				margin-bottom: 18px;
+			}
+		}
+		.layui-layer-btn {
+			.layui-layer-btn0,
+			.layui-layer-btn1 {
+				width: 100px;
+				height: 44px;
+				line-height: 44px;
+				margin: 0;
+			}
+			.layui-layer-btn0 {
+				background-color: #fff;
+                color: #333;
+                margin-right: 7px;
+			}
+			.layui-layer-btn1 {
+                margin-left: 7px;
+				background-color: #ff6700;
+                color: #ffffff;
+                border-color: #ff6700;
+			}
+		}
+	}
 }

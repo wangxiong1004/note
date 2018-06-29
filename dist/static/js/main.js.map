@@ -1,0 +1,1 @@
+{"version":3,"sources":["js/main.js"],"names":["show","console","log"],"mappings":"AAAA,SAASA,OACLC,QAAQC,IAAI,cACZD,QAAQC,IAAI,cAGhBF","file":"main.js","sourcesContent":["function show() {\r\n    console.log('show time!');\r\n    console.log('bowrsersss') \r\n}\r\n\r\nshow();"]}
