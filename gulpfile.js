@@ -145,9 +145,9 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(config.srcScss + '/**/*.scss', ['sass', 'html']);
-    gulp.watch(config.srcJs + '/**/*.js', ['js', 'html']);
-    gulp.watch(config.srcImages + '/**/*.{png,jpg,gif,ico,jpeg}', ['images', 'html']);
+    gulp.watch(config.srcScss + '/**/*.scss', ['sass', 'html', 'htmlindex']);
+    gulp.watch(config.srcJs + '/**/*.js', ['js', 'html', 'htmlindex']);
+    gulp.watch(config.srcImages + '/**/*.{png,jpg,gif,ico,jpeg}', ['images', 'html', 'htmlindex']);
     gulp.watch(config.srcViews + '/**/*.html', ['fileinclude', 'html']);
     gulp.watch('./src/index.html', ['fileincludeindex', 'htmlindex']);
 });

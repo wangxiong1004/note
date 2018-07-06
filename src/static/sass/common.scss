@@ -1,6 +1,7 @@
 @charset 'utf-8';
 @import './common/normalize';
 @import './common/reset';
+@import './common/common';
 .clearfix {
 	*zoom: 1;
 	&:before,
@@ -114,6 +115,40 @@
 			}
 		}
 	}
+	&.open-srbank-layer03 {
+		.layui-layer-title {
+			border-bottom: none;
+			background-color: #f8f8f8;
+		}
+		.layui-layer-content {
+			padding: 56px 48px 66px 52px;
+			background-color: #f8f8f8;
+			border-bottom: 1px solid #e5e5e5;
+		}
+		.layer__content {
+			.sr-logo {
+				width: 264px;
+				height: 56px;
+				margin: 0 auto;
+				background: red;
+			}
+			.layer__tit {
+				margin: 26px auto 17px;
+				font-size: 24px;
+				color: #ff6700;
+			}
+		}
+		.layui-layer-btn {
+            padding-top: 40px;
+			.layui-layer-btn0 {
+                width: 210px;
+                height: 52px;
+                line-height: 52px;
+                font-size: 18px;
+                color: #ffffff;
+            }
+		}
+	}
 	&.sign-srbank-layer {
 		.layui-layer-content {
 			padding: 70px 30px 40px;
@@ -147,14 +182,41 @@
 			}
 			.layui-layer-btn0 {
 				background-color: #fff;
-                color: #333;
-                margin-right: 7px;
+				color: #333;
+				margin-right: 7px;
 			}
 			.layui-layer-btn1 {
-                margin-left: 7px;
+				margin-left: 7px;
 				background-color: #ff6700;
-                color: #ffffff;
-                border-color: #ff6700;
+				color: #ffffff;
+				border-color: #ff6700;
+			}
+		}
+	}
+	&.unbind-card-layer {
+		.layui-layer-content {
+			padding: 34px 20px;
+		}
+		.layer__content {
+			.unbind-icon-wrapper {
+				text-align: center;
+				.unbind-icon {
+					display: inline-block;
+					width: 90px;
+					height: 90px;
+					background-color: #90CD98;
+					border-radius: 50%;
+				}
+			}
+			.layer__tip {
+				line-height: 1;
+				margin-top: 4px;
+				margin-bottom: 14px;
+				font-size: 12px;
+				color: #8f8f8f;
+			}
+			.layer__desc {
+				padding-left: 80px;
 			}
 		}
 	}

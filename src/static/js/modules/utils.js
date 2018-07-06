@@ -2,46 +2,6 @@ layui.define(['jquery'], function (exports) {
 	var $ = layui.jquery;
 
 	exports('utils', {
-		showTime: function () {
-			var time_start = new Date("2014/12/17 00:00:00").getTime();
-			var time_end = new Date().getTime();
-			var time_distance = time_end - time_start;
-			if (time_distance > 0) {
-				var int_year = Math.floor(time_distance / 31536000000)
-				time_distance -= int_year * 31536000000;
-				var int_day = Math.floor(time_distance / 86400000)
-				time_distance -= int_day * 86400000;
-				var int_hour = Math.floor(time_distance / 3600000)
-				time_distance -= int_hour * 3600000;
-				var int_minute = Math.floor(time_distance / 60000)
-				time_distance -= int_minute * 60000;
-				var int_second = Math.floor(time_distance / 1000)
-				if (int_day < 10) {
-					int_day = "0" + int_day;
-				}
-				if (int_hour < 10) {
-					int_hour = "0" + int_hour;
-				}
-				if (int_minute < 10) {
-					int_minute = "0" + int_minute;
-				}
-				if (int_second < 10) {
-					int_second = "0" + int_second;
-				}
-				$("#time_y").html(int_year);
-				$("#time_d").html(int_day);
-				$("#time_h").html(int_hour);
-				$("#time_m").html(int_minute);
-				$("#time_s").html(int_second);
-				setTimeout("Util.showTime()", 1000);
-			} else {
-				$("#time_y").html('0');
-				$("#time_d").html('00');
-				$("#time_h").html('00');
-				$("#time_m").html('00');
-				$("#time_s").html('00');
-			}
-		},
 		/**
 		 * 0-10的随机数
 		 * @returns {Number}
@@ -87,31 +47,6 @@ layui.define(['jquery'], function (exports) {
 			} else {
 				return y + '-' + m + '-' + d + ' ';
 			}
-		},
-		/**
-		 * tab切换
-		 * @param tab
-		 * @param tabContent
-		 * @param currentClass
-		 * @param call
-		 * @param evenType
-		 */
-		tabFn: function (tab, tabContent, currentClass, call, evenType) {
-			if (typeof currentClass == 'undefined') {
-				currentClass = 'curr';
-			}
-			if (typeof evenType == 'undefined') {
-				evenType = 'click';
-			}
-			tab.bind(evenType, function () {
-				tab.removeClass(currentClass);
-				$(this).addClass(currentClass);
-				var index = $(this).index();
-				tabContent.hide().eq(index).show();
-				if (typeof call != 'undefined') {
-					call(index);
-				}
-			});
 		},
 		/**
 		 * 获取cookie
@@ -271,9 +206,9 @@ layui.define(['jquery'], function (exports) {
 				default:
 					//                  urlApi = 'https://www.dolabank.com/apigateway/';
 					// urlApi = 'https://api.dolabank.com/';
-                    // url = 'https://www.dolabank.com/';
-                    urlApi = 'https://api.dolabank.club/';
-                    url = 'https://www.dolabank.club/';
+					// url = 'https://www.dolabank.com/';
+					urlApi = 'https://api.dolabank.club/';
+					url = 'https://www.dolabank.club/';
 			}
 
 			domainObj['url'] = url;
@@ -316,8 +251,8 @@ layui.define(['jquery'], function (exports) {
 			var url = options.url || '';
 			var platform = options.platform || 'pc';
 			var type = options.type || 'get';
-            var token = this.getCookie('token');
-            token = 'f348071210309ce6f119072e951140c6';
+			var token = this.getCookie('token');
+			token = '9eabd8a36ba8c4cb88bcf019157bfbba';
 			var Codekey = this.getRrandomStr();
 			var paramsdata = options.data;
 			var params = this.getParams(platform, token, paramsdata);
@@ -388,6 +323,58 @@ layui.define(['jquery'], function (exports) {
 			} else {
 				ele.addClass(className);
 				ele.data('checked', false);
+			}
+		},
+		/**
+		 * 数字格式转换成千分位
+		 * @param { Object } num
+		 */
+		commafy: function (num) {
+			//1.先去除空格,判断是否空值和非数 
+			num = num + "";
+			num = num.replace(/[ ]/g, ""); //去除空格
+			if (num == "") {
+				return;
+			}
+			if (isNaN(num)) {
+				return;
+			}
+			//2.针对是否有小数点，分情况处理 
+			var index = num.indexOf(".");
+			if (index == -1) { //无小数点 
+				var reg = /(-?\d+)(\d{3})/;
+				while (reg.test(num)) {
+					num = num.replace(reg, "$1,$2");
+				}
+			} else {
+				var intPart = num.substring(0, index);
+				var pointPart = num.substring(index + 1, num.length);
+				var reg = /(-?\d+)(\d{3})/;
+				while (reg.test(intPart)) {
+					intPart = intPart.replace(reg, "$1,$2");
+				}
+				num = intPart + "." + pointPart;
+			}
+			return num;
+		},
+		/**
+		 * 去除千分位
+		 * @param{Object}num
+		 */
+		delcommafy: function (num) {
+			num = num.replace(/[ ]/g, ""); //去除空格
+			num = num.replace(/,/gi, '');
+			return num;
+		},
+		/*
+		 * 千分位相互转换
+		 * @param {} val
+		 */
+		commafyToggle: function (val) {
+			if (val.toString().indexOf(",") > -1) {
+				return delcommafy(val);
+			} else {
+				return commafy(val);
 			}
 		}
 	});
