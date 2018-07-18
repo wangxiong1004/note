@@ -1,12 +1,7 @@
 @charset 'utf-8';
 
+
+@import './common/common';
 @import './information/about';
 
-html {
-    background: #ccc;
-    box-shadow: 2px 2px 2px #ccc;
-}
 
-h2 {
-    font-weight: normal;
-}

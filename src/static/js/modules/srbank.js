@@ -62,27 +62,36 @@ layui.define(['jquery', 'layer', 'utils', 'api'], function (exports) {
 							}
 
 							return false;
-						} else if (options.validata.signAutoBid && !isSRbankUserSignAutoBid) { // 自动投标签约
+						} else if (!isSRbankUserSignAutoBid && options.validata.signAutoBid) { // 自动投标签约
 
 							if (options.signAutoBidCallback && typeof options.signAutoBidCallback === 'function') {
 								options.signAutoBidCallback();
 							}
 
 							return false;
-						} else if (options.validata.signCreditTransfer && !isSRbankUserSignCreditTransfer) { // 自动债转签约
+
+						} else if (!isSRbankUserSignCreditTransfer && options.validata.signCreditTransfer) { // 自动债转签约
 
 							if (options.signCreditTransferCallback && typeof options.signCreditTransferCallback === 'function') {
 								options.signCreditTransferCallback();
 							}
 
 							return false;
-						} else if (options.validata.signTransfer && !isSRbackUserSignTransfer) { // 申请转让签约
+
+						} else if (!isSRbackUserSignTransfer && options.validata.signTransfer) { // 申请转让签约
 
 							if (options.signTransferCallback && typeof options.signTransferCallback === 'function') {
 								options.signTransferCallback();
 							}
 
 							return false;
+
+						} else {
+
+							// 存管验证通过后的回调
+							if (options.validataSuccessCallback && typeof options.validataSuccessCallback === 'function') {
+								options.validataSuccessCallback();
+							}
 						}
 					} else {
 						layer.msg(data.msg);
@@ -337,6 +346,6 @@ layui.define(['jquery', 'layer', 'utils', 'api'], function (exports) {
 		}
 	}
 
-	
+
 	exports('srbank', srbankMethods);
 });

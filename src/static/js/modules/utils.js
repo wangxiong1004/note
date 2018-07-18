@@ -180,15 +180,10 @@ layui.define(['jquery'], function (exports) {
 		getDomain: function () {
 			var url = "",
 				urlApi = "";
-			var domainObj = {};
 			switch (window.location.hostname) {
 				case "www.dolabank.com":
 					urlApi = 'https://www.dolabank.com/apigateway/';
 					url = 'https://www.dolabank.com/';
-					break;
-				case "www.duolajucai.top":
-					urlApi = 'https://api.duolajucai.top/';
-					url = 'https://www.duolajucai.top/';
 					break;
 				case "www.dolabank.top":
 					urlApi = 'https://api.dolabank.top/';
@@ -204,17 +199,17 @@ layui.define(['jquery'], function (exports) {
 					urlApi = 'https://api.dolabank.club/';
 					break;
 				default:
-					//                  urlApi = 'https://www.dolabank.com/apigateway/';
+					// urlApi = 'https://www.dolabank.com/apigateway/';
 					// urlApi = 'https://api.dolabank.com/';
 					// url = 'https://www.dolabank.com/';
 					urlApi = 'https://api.dolabank.club/';
 					url = 'https://www.dolabank.club/';
 			}
 
-			domainObj['url'] = url;
-			domainObj['urlApi'] = urlApi;
-
-			return domainObj;
+			return {
+				url: url,
+				urlApi: urlApi
+			};
 
 		},
 		/**
